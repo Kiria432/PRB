@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище AS2025_5Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CursePerson">
+          <Key>
+            <PropertyRef Name="personID" />
+          </Key>
+          <Property Name="personID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="personPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="personRole" Type="int" Nullable="false" />
+          <Property Name="personLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="personFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CursePersonRole">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="int" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="Роль пользователя">
+          <End Role="CursePersonRole" Type="Self.CursePersonRole" Multiplicity="1" />
+          <End Role="CursePerson" Type="Self.CursePerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CursePersonRole">
+              <PropertyRef Name="roleID" />
+            </Principal>
+            <Dependent Role="CursePerson">
+              <PropertyRef Name="personRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище AS2025_5ModelContainer">
+          <EntitySet Name="CursePerson" EntityType="Self.CursePerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CursePersonRole" EntityType="Self.CursePersonRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Роль пользователя" Association="Self.Роль пользователя">
+            <End Role="CursePersonRole" EntitySet="CursePersonRole" />
+            <End Role="CursePerson" EntitySet="CursePerson" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AS2025_5Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CursePerson">
+          <Key>
+            <PropertyRef Name="personID" />
+          </Key>
+          <Property Name="personID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="personPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="personRole" Type="Int32" Nullable="false" />
+          <Property Name="personLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="personFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CursePersonRole" Relationship="Self.Роль_пользователя" FromRole="CursePerson" ToRole="CursePersonRole" />
+        </EntityType>
+        <EntityType Name="CursePersonRole">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="Int32" Nullable="false" />
+          <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CursePerson" Relationship="Self.Роль_пользователя" FromRole="CursePersonRole" ToRole="CursePerson" />
+        </EntityType>
+        <Association Name="Роль_пользователя">
+          <End Role="CursePersonRole" Type="Self.CursePersonRole" Multiplicity="1" />
+          <End Role="CursePerson" Type="Self.CursePerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CursePersonRole">
+              <PropertyRef Name="roleID" />
+            </Principal>
+            <Dependent Role="CursePerson">
+              <PropertyRef Name="personRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AS2025_5Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CursePerson" EntityType="Self.CursePerson" />
+          <EntitySet Name="CursePersonRole" EntityType="Self.CursePersonRole" />
+          <AssociationSet Name="Роль_пользователя" Association="Self.Роль_пользователя">
+            <End Role="CursePersonRole" EntitySet="CursePersonRole" />
+            <End Role="CursePerson" EntitySet="CursePerson" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AS2025_5ModelContainer" CdmEntityContainer="AS2025_5Entities">
+          <EntitySetMapping Name="CursePerson">
+            <EntityTypeMapping TypeName="AS2025_5Model.CursePerson">
+              <MappingFragment StoreEntitySet="CursePerson">
+                <ScalarProperty Name="personID" ColumnName="personID" />
+                <ScalarProperty Name="PersonLogin" ColumnName="PersonLogin" />
+                <ScalarProperty Name="personPassword" ColumnName="personPassword" />
+                <ScalarProperty Name="personRole" ColumnName="personRole" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CursePersonRole">
+            <EntityTypeMapping TypeName="AS2025_5Model.CursePersonRole">
+              <MappingFragment StoreEntitySet="CursePersonRole">
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
